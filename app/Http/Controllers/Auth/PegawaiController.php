@@ -25,21 +25,24 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:250',
+            'nama' => 'required|string|max:250',
             'email' => 'required|email|max:250|unique:users',
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:8|confirmed',
+            'phone' => 'required|numeric',
         ]);
 
-        User::create([
-            'name' => $request->name,
+        Pegawai::create([
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'nama' => $request->nama,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
         ]);
 
         $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
+        //Auth::attempt($credentials);
+        Auth::guard('pegawai')->attempt($credentials);
         $request->session()->regenerate();
-        return redirect()->route('dashboard')
+        return redirect()->route('pegawai/dashboard')
         ->withSuccess('You have successfully registered & logged in!');
     }
 
@@ -55,10 +58,11 @@ class PegawaiController extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($credentials))
+       // if(Auth::attempt($credentials))
+       if(Auth::guard('pegawai')->attempt($credentials))
         {
             $request->session()->regenerate();
-            return redirect()->route('dashboard')
+            return redirect()->route('pegawai/dashboard')
                 ->withSuccess('You have successfully logged in!');
         }
 
@@ -70,12 +74,14 @@ class PegawaiController extends Controller
 
     public function dashboard()
     {
-        if(Auth::check())
+        //return view('pegawai.dashboard');
+        //if(Auth::check())
+        if(Auth::guard('pegawai')->check())
         {
             return view('pegawai.dashboard');
         }
         
-        return redirect()->route('login')
+        return redirect()->route('pegawai/login')
             ->withErrors([
             'email' => 'Please login to access the dashboard.',
         ])->onlyInput('email');
@@ -83,10 +89,11 @@ class PegawaiController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        //Auth::logout();
+        Auth::guard('pegawai')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('login')
+        return redirect()->route('pegawai/login')
             ->withSuccess('You have logged out successfully!');;
     }    
 

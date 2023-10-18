@@ -3,6 +3,7 @@
 namespace Database\Factories;
 use App\Models\Siswa;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,11 +16,12 @@ class SiswaFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Siswa::class;
     public function definition(): array
     {
         return [
-            'email' => $faker->unique()->safeEmail,
-            'nama' => $faker->name,
+            'email' =>  $this->faker->unique()->safeEmail,
+            'nama' =>  $this->faker->name,
             'password' => bcrypt('password'),
         ];
     }

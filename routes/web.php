@@ -28,11 +28,11 @@ Route::controller(LoginRegisterController::class)->group(function() {
 });
 
 Route::controller(PegawaiController::class)->group(function() {
-    Route::get('/pegawai/register', 'register')->name('register');
-    Route::post('/pegawai/store', 'store')->name('store');
-    Route::get('/pegawai/login', 'login')->name('login');
-    Route::post('/pegawai/authenticate', 'authenticate')->name('authenticate');
-    Route::get('/pegawai/dashboard', 'dashboard')->name('dashboard');
-    Route::post('/pegawai/logout', 'logout')->name('logout');
+    Route::get('/pegawai/register', 'register')->name('pegawai/register');
+    Route::post('/pegawai/store', 'store')->name('pegawai/store');
+    Route::get('/pegawai/login', 'login')->name('pegawai/login');
+    Route::post('/pegawai/authenticate', 'authenticate')->name('pegawai/authenticate');
+    Route::get('/pegawai/dashboard', 'dashboard')->name('pegawai/dashboard');
+    Route::post('/pegawai/logout', 'logout')->name('pegawai/logout');
 });
 

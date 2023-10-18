@@ -11,7 +11,7 @@
 
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container">
-          <a class="navbar-brand" href="{{ URL('/') }}">Custom Login Register</a>
+          <a class="navbar-brand" href="{{ URL('/') }}">Custom Login Register Pegawai</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -19,22 +19,23 @@
             <ul class="navbar-nav ms-auto">
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('login')) ? 'active' : '' }}" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link {{ (request()->is('login')) ? 'active' : '' }}" href="{{ route('pegawai/login') }}">Login Pegawai</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('register')) ? 'active' : '' }}" href="{{ route('register') }}">Register</a>
+                        <a class="nav-link {{ (request()->is('register')) ? 'active' : '' }}" href="{{ route('pegawai/register') }}">Register Pegawai</a>
                     </li>
                 @else    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->name }}
+                           
+                            {{ Auth::guard('pegawai')->user()->nama }}
                         </a>
                         <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('logout') }}"
+                        <li><a class="dropdown-item" href="{{ route('pegawai/logout') }}"
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
                             >Logout</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            <form id="logout-form" action="{{ route('pegawai/logout') }}" method="POST">
                                 @csrf
                             </form>
                         </li>
